@@ -1,6 +1,7 @@
 using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Services;
+using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 {
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
         public void HandleTileClick(Tile tile)
         {
+            Debug.Log("I was clicked!!");
         }
     }
 }

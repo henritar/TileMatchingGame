@@ -10,10 +10,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
 {
     public class GameInitializer : MonoBehaviour
     {
-        [SerializeField] private TileFlyweight[] tileFlyweights; //Configurado no inspector
-        [SerializeField] private GameObject _tilePrefab; //Configurado no inspector
+        [SerializeField] private TileFlyweight[] tileFlyweights; 
+        [SerializeField] private GameObject _tilePrefab;
         [SerializeField] private Transform _tilesParent;
         [SerializeField] private RectTransform _boardFrameTransform;
+
+        private GameplayController _gameplayController;
 
         void Start()
         {
@@ -24,16 +26,21 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent);
             BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter);
             GameManager gameManager = new GameManager(boardFiller);
-            GameplayController gameplayController = new GameplayController(gameManager);
+            _gameplayController = new GameplayController(gameManager);
 
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, canvasAdapter);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, tileViewPool);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, boardFiller);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameManager);
-            DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameplayController);
+            DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, _gameplayController);
 
             tileViewPool.PrePopulate(10);
             gameManager.StartGame();
+        }
+
+        private void Update()
+        {
+            _gameplayController.ObserveClickHandler();
         }
     }
 }
