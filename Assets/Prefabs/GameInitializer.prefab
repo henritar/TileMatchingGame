@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2082895730345138720
+--- !u!1 &9125003902615077218
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2082895730345138734}
-  - component: {fileID: 2082895730345138735}
-  - component: {fileID: 234319896}
+  - component: {fileID: 9125003902615077217}
+  - component: {fileID: 9125003902615077216}
+  - component: {fileID: 9125003902615077219}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameInitializer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2082895730345138734
+--- !u!4 &9125003902615077217
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082895730345138720}
+  m_GameObject: {fileID: 9125003902615077218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,16 +32,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2082895730345138735
+--- !u!114 &9125003902615077216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082895730345138720}
+  m_GameObject: {fileID: 9125003902615077218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9b03340ce754642a1b3f3ea09b02cd, type: 3}
+  m_Script: {fileID: 11500000, guid: bc2d244e30e0f2c418f5eced557a3b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9125003902615077219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125003902615077218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0018010d9504a44a79dece4fb9c452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tileFlyweights:
@@ -49,18 +61,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d73f370dc3ce844eab62d99f1522426, type: 2}
   - {fileID: 11400000, guid: 67c83c03e51889143855a8ac4bc9bf15, type: 2}
   - {fileID: 11400000, guid: 53a8d26a819b3b14ca9fcc289f2a88fe, type: 2}
-  tilePrefab: {fileID: 240789538351578981, guid: d0f409c0a07947b4fa44c5b87718e491, type: 3}
-  TilesParent: {fileID: 0}
-  BoardFrameTransform: {fileID: 0}
---- !u!114 &234319896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082895730345138720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc2d244e30e0f2c418f5eced557a3b63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _tilePrefab: {fileID: 240789538351578981, guid: d0f409c0a07947b4fa44c5b87718e491, type: 3}
+  _tilesParent: {fileID: 0}
+  _boardFrameTransform: {fileID: 0}

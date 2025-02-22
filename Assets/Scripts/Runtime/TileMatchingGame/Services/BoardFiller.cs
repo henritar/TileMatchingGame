@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
+using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
@@ -11,6 +12,14 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         private readonly ITileFactory _tileFactory;
         private readonly TileViewPool _tileViewPool;
         private readonly CanvasAdapter _canvasAdapter;
+
+        public BoardFiller()
+        {
+            _board = DIContainer.Instance.Resolve<IBoard>();
+            _tileFactory = DIContainer.Instance.Resolve<ITileFactory>();
+            _tileViewPool = DIContainer.Instance.Resolve<TileViewPool>();
+            _canvasAdapter = DIContainer.Instance.Resolve<CanvasAdapter>();
+        }
 
         public BoardFiller(IBoard board, ITileFactory tileFactory, TileViewPool tileViewPool, CanvasAdapter canvasAdapter)
         {

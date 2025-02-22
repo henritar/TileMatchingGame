@@ -1,7 +1,4 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
-using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
-using Assets.Scripts.Runtime.TileMatchingGame.View;
-using System.Collections;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.View;
 using System.Collections.Generic;
 using UnityEngine;
 
