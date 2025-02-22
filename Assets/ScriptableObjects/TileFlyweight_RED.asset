@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b34ce5bad328864cbae0b6ee4e02e9f, type: 3}
+  m_Name: TileFlyweight_RED
+  m_EditorClassIdentifier: 
+  Color: 0
+  Sprite: {fileID: -3543667733614087414, guid: 506eef40c8ccc944c9177da09421e101, type: 3}

@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 0b7fb0b2f19285643b7688ed7ba275b4
+guid: 506eef40c8ccc944c9177da09421e101
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5672258373178653655
-    second: BoardFrame_0
+      213: -3543667733614087414
+    second: TileAtlas_0
+  - first:
+      213: -635601846350095057
+    second: TileAtlas_1
+  - first:
+      213: -5434306751725826435
+    second: TileAtlas_2
+  - first:
+      213: -3777972446926096764
+    second: TileAtlas_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -35,7 +44,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,15 +55,15 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1
+  spritePixelsToUnits: 500
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -130,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BoardFrame_0
+      name: TileAtlas_0
       rect:
         serializedVersion: 2
-        x: 304
-        y: 151
-        width: 975
-        height: 947
+        x: 58
+        y: 259
+        width: 185
+        height: 182
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,17 +153,76 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 924837000171841b0800000000000000
-      internalID: -5672258373178653655
+      spriteID: a033befa8fc52dec0800000000000000
+      internalID: -3543667733614087414
       vertices: []
       indices: 
       edges: []
       weights: []
-    outline:
-    - - {x: -455, y: -485}
-      - {x: -455, y: 457}
-      - {x: 515, y: 457}
-      - {x: 515, y: -485}
+    - serializedVersion: 2
+      name: TileAtlas_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 259
+        width: 183
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d58b10d73ed27f0800000000000000
+      internalID: -635601846350095057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileAtlas_2
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 55
+        width: 185
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7e00ee2dc67594b0800000000000000
+      internalID: -5434306751725826435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 55
+        width: 183
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 486b1c97312f19bc0800000000000000
+      internalID: -3777972446926096764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000

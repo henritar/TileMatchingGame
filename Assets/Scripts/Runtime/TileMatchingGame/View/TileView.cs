@@ -1,11 +1,27 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.View
 {
     public class TileView : MonoBehaviour
     {
-        public Tile Tile { get; private set; }
-        private SpriteRenderer _spriteRenderer;
+        private Tile _tile;
+        [SerializeField]
+        public SpriteRenderer SpriteRenderer;
+
+        public void Initialize(Tile tile)
+        {
+            _tile = tile;
+            UpdateVisuals();
+        }
+
+        public void UpdateVisuals()
+        {
+            if (_tile != null && SpriteRenderer != null)
+            {
+                SpriteRenderer.sprite = _tile.TileData.Sprite; 
+            }
+        }
     }
 }
