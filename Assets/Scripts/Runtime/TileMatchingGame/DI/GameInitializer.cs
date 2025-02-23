@@ -34,7 +34,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
         void Awake()
         {
             //Registering interfaces
-            DIContainer.Instance.Register<IBoard, Board>(DIContainer.RegistrationType.Singleton, () => new Board(5, 5));
+            DIContainer.Instance.Register<IBoard, Board>(DIContainer.RegistrationType.Singleton, () => new Board());
             DIContainer.Instance.Register<ITileFactory, TileFactory>(DIContainer.RegistrationType.Singleton, () => new TileFactory(tileFlyweights));
             DIContainer.Instance.Register<IMatchFinder, DFSMatchFinder>(DIContainer.RegistrationType.Singleton, () => new DFSMatchFinder());
             DIContainer.Instance.Register<IScoreManager, ScoreManager>(DIContainer.RegistrationType.Singleton, () => new ScoreManager());

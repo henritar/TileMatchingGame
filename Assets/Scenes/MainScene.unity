@@ -541,6 +541,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6572286345435000980, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
   m_PrefabInstance: {fileID: 470543943}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1825980462 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 799772134, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
+  m_PrefabInstance: {fileID: 470543943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1943289930414611025
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -764,7 +769,7 @@ PrefabInstance:
     - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
       propertyPath: _levelButtonParent
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1825980462}
     - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
       propertyPath: _levelButtonPrefab
       value: 
@@ -775,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 278419040}
     - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
       propertyPath: levelData.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
       propertyPath: levelData.Array.data[0]
@@ -789,5 +794,17 @@ PrefabInstance:
       propertyPath: levelData.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 7b49b9b56946fbe429641fa80d1b1f3f, type: 2}
+    - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
+      propertyPath: levelData.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: e30e3479f65ad724e813defded655215, type: 2}
+    - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
+      propertyPath: tileFlyweights.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
+      propertyPath: tileFlyweights.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 53a8d26a819b3b14ca9fcc289f2a88fe, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}

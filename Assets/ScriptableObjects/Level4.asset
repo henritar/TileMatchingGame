@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4926c3996bfd7b7479356878db80e0be, type: 3}
+  m_Name: Level4
+  m_EditorClassIdentifier: 
+  BoardWidth: 12
+  BoardHeight: 12
+  TileMatchPoints: 10
+  LevelGoals:
+  - goalEnum: 2
+    maxPoints: 0
+    tileColor: 3
+    tileQuantity: 100
+  - goalEnum: 0
+    maxPoints: 500
+    tileColor: 2
+    tileQuantity: 25
+  - goalEnum: 1
+    maxPoints: 15
+    tileColor: 2
+    tileQuantity: 100

@@ -7,7 +7,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 {
     public class Board : IBoard
     {
-        private Tile[,] _tiles;
+        private Tile[,] _tiles = new Tile[0,0];
 
         public IReadOnlyList<Tile> BoardTiles => _tiles.Cast<Tile>().ToList().AsReadOnly();
         public int Width { get; set; } 
@@ -17,11 +17,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
         public event Action<Tile> OnTileRemoved;
         public event Action<Tile> OnTileFalling;
 
-        public Board(int width, int height)
+        public Board()
         {
-            Width = width;
-            Height = height;
-            _tiles = new Tile[height, width];
         }
 
         public Tile GetTileAt(int row, int column)
