@@ -62,6 +62,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         public void StartGame()
         {
             CreateGameStates();
+            _boardModifier.RestartBoard();
             ChangeState(GameStateEnum.Playing);
         }
 

@@ -2,6 +2,7 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 {
@@ -53,6 +54,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         public void FillEmptySpaces()
         {
             _boardFiller.FillEmptySpaces();
+        }
+
+        public void RestartBoard()
+        {
+            RemoveTiles(_board.BoardTiles.ToList());
         }
     }
 }

@@ -1,16 +1,18 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 {
     public class Board : IBoard
     {
         private Tile[,] _tiles;
-        private int _width;
-        private int _height;
 
-        public int Width { get => _width; } 
-        public int Height { get => _height; }
+        public IReadOnlyList<Tile> BoardTiles => _tiles.Cast<Tile>().ToList().AsReadOnly();
+        public int Width { get; set; } 
+        public int Height { get; set; }
 
         //public event Action OnBoardUpdated;
         public event Action<Tile> OnTileRemoved;
@@ -18,8 +20,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 
         public Board(int width, int height)
         {
-            _width = width;
-            _height = height;
+            Width = width;
+            Height = height;
             _tiles = new Tile[height, width];
         }
 

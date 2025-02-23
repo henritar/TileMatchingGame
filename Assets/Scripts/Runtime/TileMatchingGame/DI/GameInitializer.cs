@@ -6,6 +6,7 @@ using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
 using Assets.Scripts.Runtime.TileMatchingGame.Services;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.DI
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
     public class GameInitializer : MonoBehaviour
     {
         [SerializeField] private TileFlyweight[] tileFlyweights; 
+        [SerializeField] private Level[] levelData; 
         [SerializeField] private GameObject _tilePrefab;
         [SerializeField] private Transform _tilesParent;
         [SerializeField] private RectTransform _boardFrameTransform;
@@ -29,6 +31,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
 
             //Instanciating
             CanvasAdapter canvasAdapter = new CanvasAdapter(DIContainer.Instance.Resolve<IBoard>(), Camera.main, _boardFrameTransform);
+            LevelManager levelManager = new LevelManager(levelData.ToList());
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent, canvasAdapter);
             BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter);
             BoardModifier boardModifier = new BoardModifier(DIContainer.Instance.Resolve<IBoard>(), boardFiller);
@@ -41,6 +44,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
 
             //Registering
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, canvasAdapter);
+            DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, levelManager);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, tileViewPool);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, boardFiller);
             DIContainer.Instance.Register<IBoardModifier, BoardModifier>(DIContainer.RegistrationType.Singleton, () => boardModifier);
@@ -52,11 +56,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
         private void Start()
         {
             var tileViewPool = DIContainer.Instance.Resolve<TileViewPool>();
-            var gameManager = DIContainer.Instance.Resolve<GameManager>();
+            var levelManager = DIContainer.Instance.Resolve<LevelManager>();
 
             tileViewPool.SetBoard();
             tileViewPool.PrePopulate(10);
-            gameManager.StartGame();
+            levelManager.LoadLevel();
         }
 
         private void Update()
