@@ -13,7 +13,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
         public void RemoveTileAt(int row, int column, bool isFalling = false);
         void FallTile(int row, int col, int rowAbove, Tile tileAbove);
 
-        public event Action OnBoardUpdated;
+        //public event Action OnBoardUpdated;
         public event Action<Tile> OnTileRemoved;
         public event Action<Tile> OnTileFalling;
     }

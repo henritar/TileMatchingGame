@@ -10,27 +10,29 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 {
     public class TileViewPool : IDisposable
     {
-        [SerializeField] private GameObject _tilePrefab;
-        [SerializeField] private Transform _parent;
+        private readonly GameObject _tilePrefab;
+        private readonly Transform _parent;
+        private readonly CanvasAdapter _canvasAdapter;
+
         private Stack<TileView> _pool = new Stack<TileView>();
         private Dictionary<Tile, TileView> _tileViewMap = new Dictionary<Tile, TileView>();
 
-        private CanvasAdapter _canvasAdapter;
         private IBoard _board;
 
         private int _initialSize;
 
-        public TileViewPool(GameObject tilePrefab, Transform parent)
+        public TileViewPool(GameObject tilePrefab, Transform parent, CanvasAdapter canvasAdapter)
         {
             _tilePrefab = tilePrefab;
             _parent = parent;
+            _canvasAdapter = canvasAdapter;
         }
         
         public void SetBoard(IBoard board = null)
         {
             _board = board ?? DIContainer.Instance.Resolve<IBoard>();
             _board.OnTileRemoved += HandleTileRemoved;
-            _board.OnTileFalling += HandleTileRemoved;
+            _board.OnTileFalling += HandleTileFalling;
         }
 
         public void PrePopulate(int initialSize)
@@ -80,7 +82,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         {
             if (_tileViewMap.TryGetValue(tile, out TileView tileView))
             {
-                //tileView.OnTilePositionUpdated();
+                var newPosition = _canvasAdapter.GetTileViewPosition(tileView);
+                tileView.OnTilePositionUpdated(newPosition);
             }
         }
 
@@ -98,6 +101,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             if (_board != null)
             {
                 _board.OnTileRemoved -= HandleTileRemoved;
+                _board.OnTileFalling -= HandleTileFalling;
             }
         }
     }

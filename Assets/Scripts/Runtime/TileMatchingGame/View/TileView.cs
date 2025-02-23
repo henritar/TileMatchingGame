@@ -41,12 +41,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
             _gameplayController.HandleTileClick(this);
         }
 
-        private void OnTilePositionUpdated(Vector3 targetPosition)
+        public void OnTilePositionUpdated(Vector3 targetPosition)
         {
             StartCoroutine(AnimateFalling(targetPosition));
         }
 
-        // Corrotina para animar a queda da Tile
         private IEnumerator AnimateFalling(Vector3 targetPosition)
         {
             float duration = 0.25f; 

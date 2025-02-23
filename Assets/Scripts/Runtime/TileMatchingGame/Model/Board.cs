@@ -12,7 +12,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
         public int Width { get => _width; } 
         public int Height { get => _height; }
 
-        public event Action OnBoardUpdated;
+        //public event Action OnBoardUpdated;
         public event Action<Tile> OnTileRemoved;
         public event Action<Tile> OnTileFalling;
 
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             if (row >= 0 && row < Height && column >= 0 && column < Width)
             {
                 _tiles[row, column] = newTile;
-                OnBoardUpdated?.Invoke(); 
+                //OnBoardUpdated?.Invoke(); 
             }
         }
         public void RemoveTileAt(int row, int column, bool isFalling = false)
@@ -60,8 +60,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
         public void FallTile(int row, int col, int rowAbove, Tile tileAbove)
         {
             SetTileAt(row, col, tileAbove);
-            RemoveTileAt(rowAbove, col, true);
             tileAbove.UpdatePosition(row, col);
+            RemoveTileAt(rowAbove, col, true);
         }
     }
 }

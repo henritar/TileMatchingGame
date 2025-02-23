@@ -54,7 +54,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         {
             _boardModifier.RemoveTiles(matchedTiles);
 
-            //_boardModifier.UpdateTilesPosition();
+            _boardModifier.UpdateTilesPosition();
 
             //RefillBoard();
         }
