@@ -29,6 +29,9 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
         [SerializeField] private RectTransform _gameOverView;
         [SerializeField] private RectTransform _goalsView;
 
+        [SerializeField] private AudioSource _musicSource;
+        [SerializeField] private AudioSource _sfxSource;
+
         private GameplayController _gameplayController;
 
         void Awake()
@@ -38,19 +41,23 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             DIContainer.Instance.Register<ITileFactory, TileFactory>(DIContainer.RegistrationType.Singleton, () => new TileFactory(tileFlyweights));
             DIContainer.Instance.Register<IMatchFinder, DFSMatchFinder>(DIContainer.RegistrationType.Singleton, () => new DFSMatchFinder());
             DIContainer.Instance.Register<IScoreManager, ScoreManager>(DIContainer.RegistrationType.Singleton, () => new ScoreManager());
+            DIContainer.Instance.Register<ISoundManager, SoundManager>(DIContainer.RegistrationType.Singleton, () => new SoundManager(_musicSource, _sfxSource));
 
             //Instanciating
             LevelButtonFactory levelButtonFactory = new LevelButtonFactory(_levelButtonPrefab, _levelButtonParent);
             CanvasAdapter canvasAdapter = new CanvasAdapter(DIContainer.Instance.Resolve<IBoard>(), Camera.main, _boardFrameTransform);
             LevelManager levelManager = new LevelManager(levelData.ToList());
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent, canvasAdapter);
-            BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter);
+            BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter, DIContainer.Instance.Resolve<ISoundManager>());
             BoardModifier boardModifier = new BoardModifier(DIContainer.Instance.Resolve<IBoard>(), boardFiller, tileViewPool);
-            GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier, DIContainer.Instance.Resolve<IScoreManager>());
+            GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier, DIContainer.Instance.Resolve<IScoreManager>(), DIContainer.Instance.Resolve<ISoundManager>());
             _gameplayController = new GameplayController(gameManager);
 
             //GameStates
-            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager, _startScreenView), new PauseState(_pauseView), new VictoryState(levelManager, _victoryView), new GameOverState(_gameOverView), new ShowGoalsState(_goalsView) };
+            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager, _startScreenView, DIContainer.Instance.Resolve<ISoundManager>()), new PauseState(_pauseView),
+                new VictoryState(levelManager, _victoryView, DIContainer.Instance.Resolve<ISoundManager>()), new GameOverState(_gameOverView,
+                DIContainer.Instance.Resolve<ISoundManager>()), new ShowGoalsState(_goalsView) };
+
             IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal(), new CollectColorTilesGoal()};
 
 
@@ -80,7 +87,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             }
 
             tileViewPool.SetBoard();
-            //tileViewPool.PrePopulate(10);
         }
 
         private void Update()

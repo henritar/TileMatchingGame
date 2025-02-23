@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
+using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         private readonly ITileFactory _tileFactory;
         private readonly TileViewPool _tileViewPool;
         private readonly CanvasAdapter _canvasAdapter;
+        private readonly ISoundManager _soundManager;
 
         private WaitForSeconds _waitFor2Secs = new WaitForSeconds(0.3f);
 
@@ -23,14 +25,16 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             _tileFactory = DIContainer.Instance.Resolve<ITileFactory>();
             _tileViewPool = DIContainer.Instance.Resolve<TileViewPool>();
             _canvasAdapter = DIContainer.Instance.Resolve<CanvasAdapter>();
+            _soundManager = DIContainer.Instance.Resolve<ISoundManager>();
         }
 
-        public BoardFiller(IBoard board, ITileFactory tileFactory, TileViewPool tileViewPool, CanvasAdapter canvasAdapter)
+        public BoardFiller(IBoard board, ITileFactory tileFactory, TileViewPool tileViewPool, CanvasAdapter canvasAdapter, ISoundManager soundManager)
         {
             _board = board;
             _tileFactory = tileFactory;
             _tileViewPool = tileViewPool;
             _canvasAdapter = canvasAdapter;
+            _soundManager = soundManager;
         }
 
         public void StartFillEmptySpaces()
@@ -59,6 +63,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
                         tileView.Initialize(newTile);
 
                         tileView.OnTilePositionUpdated(_canvasAdapter.GetTileViewPosition(tileView));
+                        _soundManager.PlaySound(AppConstants.TileFallingSound);
                     }
                 }
                 yield return shouldWait ? null : _waitFor2Secs;

@@ -20,6 +20,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         private IMatchFinder _matchFinder;
         private IBoardModifier _boardModifier;
         private IScoreManager _scoreManager;
+        private ISoundManager _soundManager;
         private List<IGoal> _completedGoals;
 
         private readonly Dictionary<GameStateEnum, IGameState> _gameStatesDict = new Dictionary<GameStateEnum, IGameState>();
@@ -30,17 +31,20 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         public event Action OnNextMove;
         public GameManager()
         {
+            _board = DIContainer.Instance.Resolve<IBoard>();
             _matchFinder = DIContainer.Instance.Resolve<IMatchFinder>();
             _boardModifier = DIContainer.Instance.Resolve<IBoardModifier>();
             _scoreManager = DIContainer.Instance.Resolve<IScoreManager>();
+            _soundManager = DIContainer.Instance.Resolve<ISoundManager>();
         }
 
-        public GameManager(IBoard board, IMatchFinder matchFinder, IBoardModifier boardModifier, IScoreManager scoreManager)
+        public GameManager(IBoard board, IMatchFinder matchFinder, IBoardModifier boardModifier, IScoreManager scoreManager, ISoundManager soundManager)
         {
             _board = board;
             _matchFinder = matchFinder;
             _boardModifier = boardModifier;
             _scoreManager = scoreManager;
+            _soundManager = soundManager;
         }
 
         private void CreateGameStates()
@@ -159,6 +163,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
         public void OnMatchedTiles(List<Tile> matchedTiles)
         {
+            _soundManager.PlaySound(AppConstants.TilePopSound);
             _scoreManager.AddScore(matchedTiles.Count);
             _boardModifier.RemoveTiles(matchedTiles);
 

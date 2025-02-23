@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 {
-    public class LevelButtonFactory : MonoBehaviour
+    public class LevelButtonFactory
     {
         public RectTransform _levelButtonParent;
         public Button _levelButtonPrefab;
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         public void CreateButton(Level level)
         {
-            Button newButton = Instantiate(_levelButtonPrefab, _levelButtonParent);
+            Button newButton = GameObject.Instantiate(_levelButtonPrefab, _levelButtonParent);
             TMP_Text text = newButton.GetComponentInChildren<TMP_Text>();
             var levelNumber = Regex.Match(level.name, @"\d+").Value;
             text.text = levelNumber;
