@@ -21,19 +21,23 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
         {
             DIContainer.Instance.Register<IBoard, Board>(DIContainer.RegistrationType.Singleton, () => new Board(5, 5));
             DIContainer.Instance.Register<ITileFactory, TileFactory>(DIContainer.RegistrationType.Singleton, () => new TileFactory(tileFlyweights));
+            DIContainer.Instance.Register<IMatchFinder, DFSMatchFinder>(DIContainer.RegistrationType.Singleton, () => new DFSMatchFinder());
 
             CanvasAdapter canvasAdapter = new CanvasAdapter(DIContainer.Instance.Resolve<IBoard>(), Camera.main, _boardFrameTransform);
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent);
             BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter);
-            GameManager gameManager = new GameManager(boardFiller);
+            BoardModifier boardModifier = new BoardModifier(DIContainer.Instance.Resolve<IBoard>(), boardFiller);
+            GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier);
             _gameplayController = new GameplayController(gameManager);
 
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, canvasAdapter);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, tileViewPool);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, boardFiller);
+            DIContainer.Instance.Register<IBoardModifier, BoardModifier>(DIContainer.RegistrationType.Singleton, () => boardModifier);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameManager);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, _gameplayController);
 
+            tileViewPool.SetBoard();
             tileViewPool.PrePopulate(10);
             gameManager.StartGame();
         }

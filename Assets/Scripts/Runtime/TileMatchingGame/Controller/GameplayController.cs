@@ -33,9 +33,9 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             }
         }
 
-        public void HandleTileClick(Tile tile)
+        public void HandleTileClick(TileView tileView)
         {
-            _gameManager.HandleTileClick(tile);
+            _gameManager.HandleTileClick(tileView);
         }  
 
     }

@@ -13,6 +13,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
         public int Height { get => _height; }
 
         public event Action OnBoardUpdated;
+        public event Action<Tile> OnTileRemoved;
+        public event Action<Tile> OnTileFalling;
 
         public Board(int width, int height)
         {
@@ -23,19 +25,35 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 
         public Tile GetTileAt(int row, int column)
         {
-            if (row >= 0 && row < Height && column >= 0 && column < Width)
+            if (row >= 0 && row < Width && column >= 0 && column < Height)
             {
-                return _tiles[column, row]; 
+                return _tiles[row, column]; 
             }
             return null;
         }
 
         public void SetTileAt(int row, int column, Tile newTile)
         {
+            if (row >= 0 && row < Width && column >= 0 && column < Height)
+            {
+                _tiles[row, column] = newTile;
+                OnBoardUpdated?.Invoke(); 
+            }
+        }
+        public void RemoveTileAt(int row, int column, bool isFalling = false)
+        {
             if (row >= 0 && row < Height && column >= 0 && column < Width)
             {
-                _tiles[column, row] = newTile;
-                OnBoardUpdated?.Invoke(); 
+                var removedTile = _tiles[row, column];
+                if (isFalling)
+                {
+                    OnTileFalling?.Invoke(removedTile);
+                }
+                else
+                {
+                    OnTileRemoved?.Invoke(removedTile);
+                }
+                _tiles[row, column] = null;
             }
         }
     }

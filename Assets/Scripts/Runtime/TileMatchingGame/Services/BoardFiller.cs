@@ -40,7 +40,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
                         _board.SetTileAt(row, col, newTile);
 
-                        TileView tileView = _tileViewPool.GetTileView();
+                        TileView tileView = _tileViewPool.GetTileView(newTile);
 
                         tileView.Initialize(newTile);
 

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b34ce5bad328864cbae0b6ee4e02e9f, type: 3}
   m_Name: TileFlyweight_BLUE
   m_EditorClassIdentifier: 
-  Color: 0
+  Color: 1
   Sprite: {fileID: -635601846350095057, guid: 506eef40c8ccc944c9177da09421e101, type: 3}
