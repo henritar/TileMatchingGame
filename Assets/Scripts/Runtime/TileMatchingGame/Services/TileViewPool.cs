@@ -48,19 +48,20 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         
         public TileView GetTileView(Tile tile)
         {
+            TileView tileView;
             if (_pool.Count > 0)
             {
-                TileView tileView = _pool.Pop();
+                tileView = _pool.Pop();
                 tileView.gameObject.SetActive(true);
                 _tileViewMap[tile] = tileView;
-                return tileView;
             }
             else
             {
-                TileView tileView = InstantiateTile(tile.Id);
+                tileView = InstantiateTile(tile.Id);
                 _tileViewMap[tile] = tileView;
-                return tileView;
             }
+            tileView.transform.position = _canvasAdapter.GetTileViewPosition(_board.Height + _board.Height, tile.Column);
+            return tileView;
         }
 
         public void ReturnTileView(TileView tileView)

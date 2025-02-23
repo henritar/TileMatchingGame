@@ -3,6 +3,8 @@ using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
+using System.Collections;
+using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 {
@@ -12,6 +14,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         private readonly ITileFactory _tileFactory;
         private readonly TileViewPool _tileViewPool;
         private readonly CanvasAdapter _canvasAdapter;
+
+        private WaitForSeconds _waitFor2Secs = new WaitForSeconds(0.3f);
 
         public BoardFiller()
         {
@@ -28,7 +32,17 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             _tileViewPool = tileViewPool;
             _canvasAdapter = canvasAdapter;
         }
+
+        public void StartFillEmptySpaces()
+        {
+            CoroutineRunner.Instance.StartCoroutine(FillEmptySpacesCoroutine());
+        }
         public void FillEmptySpaces()
+        {
+            CoroutineRunner.Instance.StartCoroutine(FillEmptySpacesCoroutine(true));
+        }
+
+        public IEnumerator FillEmptySpacesCoroutine(bool shouldWait = false)
         {
             for (int col = 0; col < _board.Width; col++)
             {
@@ -44,9 +58,10 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
                         tileView.Initialize(newTile);
 
-                        _canvasAdapter.PositionTileView(tileView);
+                        tileView.OnTilePositionUpdated(_canvasAdapter.GetTileViewPosition(tileView));
                     }
                 }
+                yield return shouldWait ? null : _waitFor2Secs;
             }
         }
     }

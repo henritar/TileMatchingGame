@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
-using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
 using UnityEngine;
 
@@ -21,7 +20,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
         public void ObserveClickHandler()
         {
-            if (Input.GetMouseButtonDown(0)) // Clique esquerdo
+            if (Input.GetMouseButtonDown(0))
             {
                 Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);

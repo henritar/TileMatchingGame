@@ -48,12 +48,13 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
 
         private IEnumerator AnimateFalling(Vector3 targetPosition)
         {
-            float duration = 0.25f; 
+            float duration = 0.3f;
             float elapsedTime = 0f;
+            Vector3 startPosition = transform.position; // Armazena a posição inicial
 
             while (elapsedTime < duration)
             {
-                transform.position = Vector3.Lerp(transform.position, targetPosition, elapsedTime / duration);
+                transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
