@@ -39,7 +39,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             _gameplayController = new GameplayController(gameManager);
 
             //GameStates
-            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState()};
+            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState(), new VictoryState(levelManager), new GameOverState()};
+            IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal()};
 
 
             //Registering
@@ -51,6 +52,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameManager);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, _gameplayController);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameStates);
+            DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, levelGoals);
         }
 
         private void Start()

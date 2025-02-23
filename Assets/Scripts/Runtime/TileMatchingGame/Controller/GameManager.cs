@@ -6,6 +6,8 @@ using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
 using System.Collections.Generic;
+using System.Linq;
+using static Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects.Level;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 {
@@ -17,8 +19,10 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         private IMatchFinder _matchFinder;
         private IBoardModifier _boardModifier;
         private IScoreManager _scoreManager;
+        private List<IGoal> _completedGoals;
 
         private readonly Dictionary<GameStateEnum, IGameState> _gameStatesDict = new Dictionary<GameStateEnum, IGameState>();
+        private readonly Dictionary<GoalsEnum, IGoal> _levelGoalsDict = new Dictionary<GoalsEnum, IGoal>();
 
         public IMatchFinder MatchFinder { get => _matchFinder; }
         public GameManager()
@@ -59,6 +63,43 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             _currentState.Enter();
         }
 
+        public void SetGoals(List<GoalSetup> goalsSetup)
+        {
+            var levelGoals = DIContainer.Instance.Resolve<IGoal[]>();
+            _levelGoalsDict.Clear();
+
+            foreach (var goalSetup in goalsSetup)
+            {
+                _levelGoalsDict[goalSetup.Goal] = levelGoals.First(g => g.Goal == goalSetup.Goal);
+
+                switch (goalSetup.GoalValueType)
+                {
+                    case GoalValueType.Int:
+                        int intValue = int.Parse(goalSetup.GoalValue);
+                        _levelGoalsDict[goalSetup.Goal].SetupGoal(intValue);
+                        break;
+                    case GoalValueType.Float:
+                        float floatValue = float.Parse(goalSetup.GoalValue);
+                        _levelGoalsDict[goalSetup.Goal].SetupGoal(floatValue);
+                        break;
+                    case GoalValueType.String:
+                        _levelGoalsDict[goalSetup.Goal].SetupGoal(goalSetup.GoalValue);
+                        break;
+                }
+
+                switch (goalSetup.Goal)
+                {
+                    case GoalsEnum.TotalPointsGoal:
+                    case GoalsEnum.MaxMovesGoal:
+                        _scoreManager.OnScoreChanged += (points) => _levelGoalsDict[goalSetup.Goal].UpdateProgress(points);
+                        break;
+                    case GoalsEnum.ColorTilesGoal:
+                        _board.OnTileRemoved += (tile) => _levelGoalsDict[goalSetup.Goal].UpdateProgress(tile);
+                        break;
+                }
+            }
+        }
+
         public void StartGame()
         {
             CreateGameStates();
@@ -82,6 +123,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             _boardModifier.RemoveTiles(matchedTiles);
 
             _boardModifier.UpdateTilesPosition();
+
+            bool allGoalsCompleted = _levelGoalsDict.Values.All(goal => goal.IsGoalCompleted());
+            if (allGoalsCompleted)
+            {
+                ChangeState(GameStateEnum.Victory);
+            }
 
             RefillBoard();
         }

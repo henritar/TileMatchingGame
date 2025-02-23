@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
+using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects
 {
@@ -8,5 +9,21 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects
         public int BoardWidth; 
         public int BoardHeight;
         public int TileMatchPoints;
+        public GoalSetup[] LevelGoals;
+
+        [System.Serializable]
+        public struct GoalSetup
+        {
+            public GoalsEnum Goal;
+            public string GoalValue;
+            public GoalValueType GoalValueType;
+        }
+
+        public enum GoalValueType
+        {
+            Int,
+            Float,
+            String
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 {
@@ -28,17 +29,17 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             board.Height = level.BoardHeight;
 
             GameManager gameManager = DIContainer.Instance.Resolve<GameManager>();
+            gameManager.SetGoals(level.LevelGoals.ToList());
             gameManager.StartGame();
         }
 
-        public void NextLevel()
+        public void SetNextLevel()
         {
             _currentLevelIndex++;
             if (_currentLevelIndex >= _levels.Count)
             {
                 _currentLevelIndex = 0;
             }
-            LoadLevel();
         }
 
         public void RestartLevel()
