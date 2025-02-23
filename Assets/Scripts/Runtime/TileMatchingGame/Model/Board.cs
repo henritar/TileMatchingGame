@@ -20,12 +20,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
         {
             _width = width;
             _height = height;
-            _tiles = new Tile[width, height];
+            _tiles = new Tile[height, width];
         }
 
         public Tile GetTileAt(int row, int column)
         {
-            if (row >= 0 && row < Width && column >= 0 && column < Height)
+            if (row >= 0 && row < Height && column >= 0 && column < Width)
             {
                 return _tiles[row, column]; 
             }
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 
         public void SetTileAt(int row, int column, Tile newTile)
         {
-            if (row >= 0 && row < Width && column >= 0 && column < Height)
+            if (row >= 0 && row < Height && column >= 0 && column < Width)
             {
                 _tiles[row, column] = newTile;
                 OnBoardUpdated?.Invoke(); 
