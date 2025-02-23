@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
+using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
@@ -7,10 +8,18 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
     {
         private GameManager _gameManager;
 
+        public GameStateEnum State => GameStateEnum.Playing;
+
+        public PlayingState()
+        {
+            _gameManager = DIContainer.Instance.Resolve<GameManager>();
+        }
+
         public PlayingState(GameManager gameManager)
         {
             _gameManager = gameManager;
         }
+
 
         public void Enter()
         {

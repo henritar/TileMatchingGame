@@ -4,6 +4,7 @@ using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
+using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
@@ -12,8 +13,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
     {
         private IBoard _board;
         private IGameState _currentState;
+        private IGameState _lastState;
         private IMatchFinder _matchFinder;
         private IBoardModifier _boardModifier;
+
+        private readonly Dictionary<GameStateEnum, IGameState> _gameStatesDict = new Dictionary<GameStateEnum, IGameState>();
 
         public IMatchFinder MatchFinder { get => _matchFinder; }
         public GameManager()
@@ -28,8 +32,25 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             _boardModifier = boardModifier;
         }
 
-        public void ChangeState(IGameState newState)
+        private void CreateGameStates()
         {
+            var gameStates = DIContainer.Instance.Resolve<IGameState[]>();
+            foreach (var gameState in gameStates) 
+            {
+                _gameStatesDict[gameState.State] = gameState;
+            }
+        }
+
+        public void ChangeState(GameStateEnum newStateEnum)
+        {
+            if (newStateEnum == _currentState?.State)
+            {
+                return;
+            }
+
+            var newState = _gameStatesDict[newStateEnum];
+
+            _lastState = _currentState;
             _currentState?.Exit();
             _currentState = newState;
             _currentState.Enter();
@@ -37,7 +58,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
         public void StartGame()
         {
-            ChangeState(new PlayingState(this));
+            CreateGameStates();
+            ChangeState(GameStateEnum.Playing);
         }
 
         public void RefillBoard()
@@ -58,9 +80,21 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
             RefillBoard();
         }
+
+        public void OnPausePressed()
+        {
+            if (_currentState.State != GameStateEnum.Paused)
+            {
+                ChangeState(GameStateEnum.Paused);
+            }
+            else
+            {
+                ChangeState(_lastState.State);
+            }
+        }
     }
 
-    public enum GameState
+    public enum GameStateEnum
     {
         Menu,
         Playing,

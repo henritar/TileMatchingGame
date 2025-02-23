@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller;
+using Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
         void Start()
         {
             //Registering interfaces
-            DIContainer.Instance.Register<IBoard, Board>(DIContainer.RegistrationType.Singleton, () => new Board(9, 9));
+            DIContainer.Instance.Register<IBoard, Board>(DIContainer.RegistrationType.Singleton, () => new Board(5, 5));
             DIContainer.Instance.Register<ITileFactory, TileFactory>(DIContainer.RegistrationType.Singleton, () => new TileFactory(tileFlyweights));
             DIContainer.Instance.Register<IMatchFinder, DFSMatchFinder>(DIContainer.RegistrationType.Singleton, () => new DFSMatchFinder());
 
@@ -32,6 +33,9 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier);
             _gameplayController = new GameplayController(gameManager);
 
+            //GameStates
+            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState()};
+
 
             //Registering
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, canvasAdapter);
@@ -40,6 +44,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             DIContainer.Instance.Register<IBoardModifier, BoardModifier>(DIContainer.RegistrationType.Singleton, () => boardModifier);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameManager);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, _gameplayController);
+            DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameStates);
 
             tileViewPool.SetBoard();
             tileViewPool.PrePopulate(10);

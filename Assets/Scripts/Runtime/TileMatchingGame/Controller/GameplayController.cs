@@ -30,6 +30,10 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
                     tileView.OnPointerClick();
                 }
             }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _gameManager.OnPausePressed();
+            }
         }
 
         public void HandleTileClick(TileView tileView)
