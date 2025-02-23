@@ -18,6 +18,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
         [SerializeField] private GameObject _tilePrefab;
         [SerializeField] private Transform _tilesParent;
         [SerializeField] private RectTransform _boardFrameTransform;
+        [SerializeField] private RectTransform _pauseView;
 
         private GameplayController _gameplayController;
 
@@ -39,7 +40,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             _gameplayController = new GameplayController(gameManager);
 
             //GameStates
-            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState(), new VictoryState(levelManager), new GameOverState()};
+            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState(_pauseView), new VictoryState(levelManager), new GameOverState()};
             IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal()};
 
 
