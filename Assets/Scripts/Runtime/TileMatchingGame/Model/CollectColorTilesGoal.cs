@@ -13,7 +13,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
         public string GetDescription()
         {
             
-            return $"You must get:\n {string.Join("\n", _amountByColor.Select(par => $"{par.Key} {par.Value} tiles\n"))}";
+            return $"You must get:\n {string.Join("\n", _amountByColor.Select(par => $"{par.Key} {par.Value} tiles"))}";
         }
 
         public string GetProgress()

@@ -88,6 +88,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
                         OnNextMove += OnNextMoveHandler;
                         break;
                     case GoalsEnum.ColorTilesGoal:
+                        _board.OnTileRemoved -= OnTileRemovedHandler;
                         _board.OnTileRemoved += OnTileRemovedHandler;
                         break;
                 }
