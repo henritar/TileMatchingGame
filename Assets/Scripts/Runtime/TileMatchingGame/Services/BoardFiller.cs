@@ -44,7 +44,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
                         tileView.Initialize(newTile);
 
-                        _canvasAdapter.PositionTileView(tileView, row, col);
+                        _canvasAdapter.PositionTileView(tileView);
                     }
                 }
             }

@@ -56,5 +56,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
                 _tiles[row, column] = null;
             }
         }
+
+        public void FallTile(int row, int col, int rowAbove, Tile tileAbove)
+        {
+            SetTileAt(row, col, tileAbove);
+            RemoveTileAt(rowAbove, col, true);
+            tileAbove.UpdatePosition(row, col);
+        }
     }
 }

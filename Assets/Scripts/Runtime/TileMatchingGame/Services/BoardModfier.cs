@@ -32,18 +32,16 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         {
             for (int col = 0; col < _board.Width; col++)
             {
-                for (int row = 0; row < _board.Height - 1; row++)
+                for (int row = 0; row < _board.Height; row++)
                 {
                     if (_board.GetTileAt(row, col) == null)
                     {
-                        for (int aboveRow = row + 1; aboveRow < _board.Height; aboveRow++)
+                        for (int rowAbove = row + 1; rowAbove < _board.Height; rowAbove++)
                         {
-                            Tile tileAbove = _board.GetTileAt(aboveRow, col);
+                            Tile tileAbove = _board.GetTileAt(rowAbove, col);
                             if (tileAbove != null)
                             {
-                                _board.SetTileAt(row, col, tileAbove);
-                                _board.RemoveTileAt(aboveRow, col, true);
-                                tileAbove.UpdatePosition(row, col);
+                                _board.FallTile(row, col, rowAbove, tileAbove);
                                 break;
                             }
                         }

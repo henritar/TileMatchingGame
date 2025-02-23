@@ -30,6 +30,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         {
             _board = board ?? DIContainer.Instance.Resolve<IBoard>();
             _board.OnTileRemoved += HandleTileRemoved;
+            _board.OnTileFalling += HandleTileRemoved;
         }
 
         public void PrePopulate(int initialSize)
@@ -72,6 +73,14 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             {
                 _tileViewMap.Remove(tile);
                 ReturnTileView(tileView);
+            }
+        }
+
+        private void HandleTileFalling(Tile tile)
+        {
+            if (_tileViewMap.TryGetValue(tile, out TileView tileView))
+            {
+                //tileView.OnTilePositionUpdated();
             }
         }
 

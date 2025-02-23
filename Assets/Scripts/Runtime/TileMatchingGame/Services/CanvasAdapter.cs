@@ -54,14 +54,30 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             return new Vector2(boardWorldSize.x / board.Width, boardWorldSize.y / board.Height);
         }
 
-        public void PositionTileView(TileView tileView, int row, int col)
+        public void PositionTileView(TileView tileView)
+        {
+            tileView.transform.localScale = GetTileViewScale(tileView);
+            tileView.transform.position = GetTileViewPosition(tileView);
+        }
+
+        public Vector3 GetTileViewScale(TileView tileView)
         {
             Vector2 cellSize = GetCellSize(_board);
-
             Vector3 spriteSize = tileView.SpriteRenderer.bounds.size;
             float scaleX = cellSize.x / spriteSize.x;
             float scaleY = cellSize.y / spriteSize.y;
 
+            return new Vector3(scaleX, scaleY, 1);
+        }
+
+        public Vector3 GetTileViewPosition(TileView tileView)
+        {
+            return GetTileViewPosition(tileView.Tile.Row, tileView.Tile.Column);
+        }
+
+        public Vector3 GetTileViewPosition(int row, int col)
+        {
+            Vector2 cellSize = GetCellSize(_board);
             Vector3 worldPosition = BoardLayoutCalculator.CalculateWorldPosition(
                 row,
                 col,
@@ -69,8 +85,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
                 cellSize
             );
 
-            tileView.transform.position = worldPosition;
-            tileView.transform.localScale = new Vector3(scaleX, scaleY, 1);
+            return worldPosition;
         }
     }
 }
