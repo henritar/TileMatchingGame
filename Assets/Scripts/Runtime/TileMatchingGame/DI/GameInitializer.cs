@@ -9,17 +9,21 @@ using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.DI
 {
     public class GameInitializer : MonoBehaviour
     {
         [SerializeField] private TileFlyweight[] tileFlyweights; 
-        [SerializeField] private Level[] levelData; 
+        [SerializeField] private Level[] levelData;
+        [SerializeField] private RectTransform _levelButtonParent;
+        [SerializeField] private Button _levelButtonPrefab;
         [SerializeField] private GameHUD _gameHudView;
         [SerializeField] private GameObject _tilePrefab;
         [SerializeField] private Transform _tilesParent;
         [SerializeField] private RectTransform _boardFrameTransform;
+        [SerializeField] private RectTransform _startScreenView;
         [SerializeField] private RectTransform _pauseView;
         [SerializeField] private RectTransform _victoryView;
         [SerializeField] private RectTransform _gameOverView;
@@ -36,6 +40,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             DIContainer.Instance.Register<IScoreManager, ScoreManager>(DIContainer.RegistrationType.Singleton, () => new ScoreManager());
 
             //Instanciating
+            LevelButtonFactory levelButtonFactory = new LevelButtonFactory(_levelButtonPrefab, _levelButtonParent);
             CanvasAdapter canvasAdapter = new CanvasAdapter(DIContainer.Instance.Resolve<IBoard>(), Camera.main, _boardFrameTransform);
             LevelManager levelManager = new LevelManager(levelData.ToList());
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent, canvasAdapter);
@@ -45,11 +50,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             _gameplayController = new GameplayController(gameManager);
 
             //GameStates
-            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState(_pauseView), new VictoryState(levelManager, _victoryView), new GameOverState(_gameOverView), new ShowGoalsState(_goalsView) };
+            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager, _startScreenView), new PauseState(_pauseView), new VictoryState(levelManager, _victoryView), new GameOverState(_gameOverView), new ShowGoalsState(_goalsView) };
             IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal(), new CollectColorTilesGoal()};
 
 
             //Registering
+            DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, levelButtonFactory);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, canvasAdapter);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, levelManager);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, tileViewPool);
@@ -66,10 +72,15 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
         {
             var tileViewPool = DIContainer.Instance.Resolve<TileViewPool>();
             var levelManager = DIContainer.Instance.Resolve<LevelManager>();
+            var levelFactory = DIContainer.Instance.Resolve<LevelButtonFactory>();
+
+            foreach (var level in levelData)
+            {
+                levelFactory.CreateButton(level);
+            }
 
             tileViewPool.SetBoard();
             tileViewPool.PrePopulate(10);
-            levelManager.LoadLevel();
         }
 
         private void Update()

@@ -1,28 +1,26 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
-using Assets.Scripts.Runtime.TileMatchingGame.Model;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
 {
     public class PlayingState : IGameState
     {
         private GameManager _gameManager;
+        private RectTransform _startScreenView;
 
         public GameStateEnum State => GameStateEnum.Playing;
 
-        public PlayingState()
-        {
-            _gameManager = DIContainer.Instance.Resolve<GameManager>();
-        }
-
-        public PlayingState(GameManager gameManager)
+        public PlayingState(GameManager gameManager, RectTransform startScreenView)
         {
             _gameManager = gameManager;
+            _startScreenView = startScreenView;
         }
 
 
         public void Enter()
         {
+            _startScreenView.gameObject.SetActive(false);
             _gameManager.RefillBoard();
         }
 

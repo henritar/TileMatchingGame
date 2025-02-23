@@ -4,6 +4,7 @@ using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Services
@@ -69,6 +70,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         {
             tileView.gameObject.SetActive(false);
             _pool.Push(tileView);
+        }
+
+        public void ReturnAllTilesView()
+        {
+            _tileViewMap.Values.ToList().ForEach(view => ReturnTileView(view));
         }
 
         private void HandleTileRemoved(Tile tile)

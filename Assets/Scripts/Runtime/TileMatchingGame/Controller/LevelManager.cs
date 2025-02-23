@@ -2,7 +2,7 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 {
@@ -31,6 +31,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             GameManager gameManager = DIContainer.Instance.Resolve<GameManager>();
             gameManager.StartGame();
             gameManager.SetGoals(level.LevelGoals);
+        }
+
+        public void SetLevel(int index)
+        {
+            _currentLevelIndex = Mathf.Clamp(index, 0, _levels.Count);
         }
 
         public void SetNextLevel()
