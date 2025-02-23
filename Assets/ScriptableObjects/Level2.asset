@@ -15,3 +15,10 @@ MonoBehaviour:
   BoardWidth: 7
   BoardHeight: 7
   TileMatchPoints: 10
+  LevelGoals:
+  - Goal: 0
+    GoalValue: 500
+    GoalValueType: 0
+  - Goal: 1
+    GoalValue: 2
+    GoalValueType: 0

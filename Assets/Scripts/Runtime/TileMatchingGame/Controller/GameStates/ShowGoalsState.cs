@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
+using Assets.Scripts.Runtime.TileMatchingGame.View;
 using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
@@ -15,9 +16,9 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
             _goalsView = goalsView;
         }
 
-
         public void Enter()
         {
+            DIContainer.Instance.Resolve<GameHUD>().SetGoalsDescription();
             _goalsView.gameObject.SetActive(true);
         }
 

@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model
@@ -14,7 +13,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
         public int Width { get; set; } 
         public int Height { get; set; }
 
-        //public event Action OnBoardUpdated;
+        public event Action OnBoardUpdate;
         public event Action<Tile> OnTileRemoved;
         public event Action<Tile> OnTileFalling;
 
@@ -39,6 +38,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             if (row >= 0 && row < Height && column >= 0 && column < Width)
             {
                 _tiles[row, column] = newTile;
+                OnBoardUpdate?.Invoke();
             }
         }
         public void RemoveTileAt(int row, int column, bool isFalling = false)
@@ -51,7 +51,15 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
                    OnTileRemoved?.Invoke(removedTile);
                 }
                 _tiles[row, column] = null;
+                OnBoardUpdate?.Invoke();
             }
+
+        }
+
+        public void ResetBoard()
+        {
+            _tiles = new Tile[Height, Width];
+            OnBoardUpdate?.Invoke();
         }
 
         public void FallTile(int row, int col, int rowAbove, Tile tileAbove)

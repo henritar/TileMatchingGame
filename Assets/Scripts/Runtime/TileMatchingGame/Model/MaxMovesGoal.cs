@@ -6,7 +6,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
     {
         private int _maxMoves;
         private int _totalMoves;
-        public GoalsEnum Goal => throw new System.NotImplementedException();
+        public GoalsEnum Goal => GoalsEnum.MaxMovesGoal;
 
         public MaxMovesGoal()
         {
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 
         public bool HasFailedGoal()
         {
-            return _totalMoves > _maxMoves;
+            return _totalMoves >= _maxMoves;
         }
 
         public bool IsGoalCompleted()
@@ -39,6 +39,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             if (setupData is int maxMoves)
             {
                 _maxMoves = maxMoves;
+                _totalMoves = 0;
             }
         }
 

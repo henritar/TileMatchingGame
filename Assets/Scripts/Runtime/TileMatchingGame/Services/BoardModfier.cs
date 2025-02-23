@@ -59,6 +59,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         public void RestartBoard()
         {
             RemoveTiles(_board.BoardTiles.ToList());
+            _board.ResetBoard();
         }
     }
 }

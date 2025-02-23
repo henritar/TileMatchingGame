@@ -27,8 +27,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
             _scoreManager = DIContainer.Instance.Resolve<IScoreManager>();
             _levelManager = DIContainer.Instance.Resolve<LevelManager>();
             _scoreManager.OnScoreChanged += SetGoalsText;
-            _restartButton.onClick.AddListener(() => _levelManager.LoadLevel());
-            _nextLevelButton.onClick.AddListener(() => _levelManager.LoadLevel());
+            _restartButton.onClick.AddListener(LoadLevelButton);
+            _nextLevelButton.onClick.AddListener(LoadLevelButton);
             _goalsButton.onClick.AddListener(() => _gameManager.ChangeState(GameStateEnum.Goals));
             _closeGoalsButton.onClick.AddListener(() => _gameManager.ChangeState(GameStateEnum.LastState));
 
@@ -37,11 +37,20 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
 
         public void SetGoalsText(int newScore)
         {
-            _goalsText.text = string.Join("\n",
+            UpdateScoreDisplay(newScore);
+        }
+
+        public void SetGoalsDescription()
+        {
+            _goalsText.text = string.Join("\n\n",
                 _gameManager.LevelGoals.Select(goal =>
                     $"{goal.GetDescription()}\n{goal.GetProgress()}"));
 
-            UpdateScoreDisplay(newScore);
+        }
+
+        private void LoadLevelButton()
+        {
+            _levelManager.LoadLevel();
         }
 
         private void UpdateScoreDisplay(int newScore)

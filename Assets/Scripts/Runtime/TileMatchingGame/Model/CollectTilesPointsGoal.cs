@@ -34,7 +34,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
         {
             if (progressData is int score)
             {
-                _currentScore += score;
+                _currentScore = score;
             }
         }
 

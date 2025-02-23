@@ -28,6 +28,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
 
         public void Exit()
         {
+            _victoryView.gameObject.SetActive(false);
         }
 
         public void HandleTileClick(Tile tile)

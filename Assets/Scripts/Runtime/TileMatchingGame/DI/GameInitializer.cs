@@ -41,7 +41,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent, canvasAdapter);
             BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter);
             BoardModifier boardModifier = new BoardModifier(DIContainer.Instance.Resolve<IBoard>(), boardFiller);
-            GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier, DIContainer.Instance.Resolve<IScoreManager>());
+            GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier, DIContainer.Instance.Resolve<IScoreManager>());
             _gameplayController = new GameplayController(gameManager);
 
             //GameStates
