@@ -38,7 +38,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             if (row >= 0 && row < Height && column >= 0 && column < Width)
             {
                 _tiles[row, column] = newTile;
-                OnBoardUpdate?.Invoke();
             }
         }
         public void RemoveTileAt(int row, int column, bool isFalling = false)
@@ -51,7 +50,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
                    OnTileRemoved?.Invoke(removedTile);
                 }
                 _tiles[row, column] = null;
-                OnBoardUpdate?.Invoke();
             }
 
         }

@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
+using System.Linq;
+using static Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects.Level;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 {
@@ -21,7 +23,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 
         public string GetProgress()
         {
-            return $"You have {_maxMoves - _totalMoves} moves to go!";
+            return $"{_maxMoves - _totalMoves} left!";
         }
 
         public bool HasFailedGoal()
@@ -34,13 +36,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             return _maxMoves >= _totalMoves;
         }
 
-        public void SetupGoal(object setupData)
+        public void SetupGoal(GoalSetup[] setupData)
         {
-            if (setupData is int maxMoves)
-            {
-                _maxMoves = maxMoves;
-                _totalMoves = 0;
-            }
+            var maxMovesGoal = setupData.First(data => data.goalEnum == GoalsEnum.MaxMovesGoal);
+            _maxMoves = maxMovesGoal.maxPoints;
+            _totalMoves = 0;
         }
 
         public void UpdateProgress(object progressData)

@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
+﻿using static Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects.Level;
+
+namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
 {
     public interface IGoal
     {
@@ -8,7 +10,7 @@
         public string GetDescription();
         public void UpdateProgress(object progressData);
         public string GetProgress();
-        public void SetupGoal(object setupData);
+        public void SetupGoal(GoalSetup[] setupData);
     }
 
     public enum GoalsEnum

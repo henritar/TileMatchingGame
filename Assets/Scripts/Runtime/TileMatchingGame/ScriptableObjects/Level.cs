@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
+using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects
@@ -14,9 +15,10 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects
         [System.Serializable]
         public struct GoalSetup
         {
-            public GoalsEnum Goal;
-            public string GoalValue;
-            public GoalValueType GoalValueType;
+            public GoalsEnum goalEnum;
+            public int maxPoints;
+            public TileColor tileColor;
+            public int tileQuantity;
         }
 
         public enum GoalValueType

@@ -16,9 +16,15 @@ MonoBehaviour:
   BoardHeight: 9
   TileMatchPoints: 10
   LevelGoals:
-  - Goal: 2
-    GoalValue: 100
-    GoalValueType: 0
-  - Goal: 1
-    GoalValue: 30
-    GoalValueType: 0
+  - goalEnum: 2
+    maxPoints: 0
+    tileColor: 0
+    tileQuantity: 25
+  - goalEnum: 2
+    maxPoints: 0
+    tileColor: 2
+    tileQuantity: 25
+  - goalEnum: 1
+    maxPoints: 20
+    tileColor: 2
+    tileQuantity: 100

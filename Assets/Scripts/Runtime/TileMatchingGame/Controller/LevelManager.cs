@@ -29,8 +29,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             board.Height = level.BoardHeight;
 
             GameManager gameManager = DIContainer.Instance.Resolve<GameManager>();
-            gameManager.SetGoals(level.LevelGoals.ToList());
             gameManager.StartGame();
+            gameManager.SetGoals(level.LevelGoals);
         }
 
         public void SetNextLevel()

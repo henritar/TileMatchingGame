@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
+using System.Linq;
+using static Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects.Level;
 
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model
@@ -43,12 +45,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             return false;
         }
 
-        public void SetupGoal(object setupData)
+        public void SetupGoal(GoalSetup[] setupData)
         {
-            if (setupData is int amountToCollect)
-            {
-                _amountToCollect = amountToCollect;
-            }
+            var pointsGoal = setupData.First(data => data.goalEnum == GoalsEnum.TotalPointsGoal);
+            _amountToCollect = pointsGoal.maxPoints;
+            _currentScore = 0;
         }
     }
 }

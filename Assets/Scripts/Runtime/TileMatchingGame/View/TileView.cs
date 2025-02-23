@@ -2,9 +2,7 @@ using Assets.Scripts.Runtime.TileMatchingGame.Controller;
 using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using System.Collections;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.View
 {

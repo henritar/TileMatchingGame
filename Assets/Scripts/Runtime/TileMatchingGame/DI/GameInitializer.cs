@@ -46,7 +46,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
 
             //GameStates
             IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState(_pauseView), new VictoryState(levelManager, _victoryView), new GameOverState(_gameOverView), new ShowGoalsState(_goalsView) };
-            IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal()};
+            IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal(), new CollectColorTilesGoal()};
 
 
             //Registering

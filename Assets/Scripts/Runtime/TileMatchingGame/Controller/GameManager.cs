@@ -67,7 +67,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             _currentState.Enter();
         }
 
-        public void SetGoals(List<GoalSetup> goalsSetup)
+        public void SetGoals(GoalSetup[] goalsSetup)
         {
             UnregisterGoals();
 
@@ -76,24 +76,10 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             foreach (var goalSetup in goalsSetup)
             {
 
-                _levelGoalsDict[goalSetup.Goal] = levelGoals.First(g => g.Goal == goalSetup.Goal);
+                _levelGoalsDict[goalSetup.goalEnum] = levelGoals.First(g => g.Goal == goalSetup.goalEnum);
+                _levelGoalsDict[goalSetup.goalEnum].SetupGoal(goalsSetup);
 
-                switch (goalSetup.GoalValueType)
-                {
-                    case GoalValueType.Int:
-                        int intValue = int.Parse(goalSetup.GoalValue);
-                        _levelGoalsDict[goalSetup.Goal].SetupGoal(intValue);
-                        break;
-                    case GoalValueType.Float:
-                        float floatValue = float.Parse(goalSetup.GoalValue);
-                        _levelGoalsDict[goalSetup.Goal].SetupGoal(floatValue);
-                        break;
-                    case GoalValueType.String:
-                        _levelGoalsDict[goalSetup.Goal].SetupGoal(goalSetup.GoalValue);
-                        break;
-                }
-
-                switch (goalSetup.Goal)
+                switch (goalSetup.goalEnum)
                 {
                     case GoalsEnum.TotalPointsGoal:
                         _scoreManager.OnScoreChanged += OnScoreChangedHandler;
@@ -182,12 +168,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         private void UpdateGoals()
         {
             bool allGoalsCompleted = _levelGoalsDict.Values.All(goal => goal.IsGoalCompleted());
+            bool hasfailedAnyGoal = _levelGoalsDict.Values.Any(goal => goal.HasFailedGoal());
             if (allGoalsCompleted)
             {
                 ChangeState(GameStateEnum.Victory);
             }
-            bool hasfailedAnyGoal = _levelGoalsDict.Values.Any(goal => goal.HasFailedGoal());
-            if (hasfailedAnyGoal)
+            else if (hasfailedAnyGoal)
             {
                 ChangeState(GameStateEnum.GameOver);
             }
