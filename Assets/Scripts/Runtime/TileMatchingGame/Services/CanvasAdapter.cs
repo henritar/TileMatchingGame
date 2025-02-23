@@ -9,12 +9,15 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         private readonly IBoard _board;
         private readonly Camera _mainCamera;
         private readonly RectTransform _frameRectTransform;
+        private Vector2 _cellSize;
 
         public CanvasAdapter(IBoard board, Camera mainCamera, RectTransform frameRectTransform)
         {
             _board = board;
             _mainCamera = mainCamera;
             _frameRectTransform = frameRectTransform;
+            OnBoardUpdateHandler();
+            _board.OnBoardUpdate += OnBoardUpdateHandler;
         }
 
         public Vector3[] GetBoardWorldCorners()
@@ -37,6 +40,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         }
 
+        public void OnBoardUpdateHandler()
+        {
+            GetCellSize();
+        }
+
         public Vector2 GetBoardWorldSize()
         {
             Vector3[] corners = GetBoardWorldCorners();
@@ -48,10 +56,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             return GetBoardWorldCorners()[0];
         }
 
-        public Vector2 GetCellSize(IBoard board)
+        public Vector2 GetCellSize()
         {
             Vector2 boardWorldSize = GetBoardWorldSize();
-            return new Vector2(boardWorldSize.x / board.Width, boardWorldSize.y / board.Height);
+            _cellSize = new Vector2(boardWorldSize.x / _board.Width, boardWorldSize.y / _board.Height);
+            return _cellSize;
         }
 
         public void PositionTileView(TileView tileView)
@@ -61,10 +70,9 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         public Vector3 GetTileViewScale(TileView tileView)
         {
-            Vector2 cellSize = GetCellSize(_board);
-            Vector3 spriteSize = tileView.SpriteRenderer.bounds.size;
-            float scaleX = cellSize.x / spriteSize.x;
-            float scaleY = cellSize.y / spriteSize.y;
+            Vector3 spriteSize = tileView.OriginalSpriteBoundsSize;
+            float scaleX = _cellSize.x / spriteSize.x;
+            float scaleY = _cellSize.y / spriteSize.y;
 
             return new Vector3(scaleX, scaleY, 1);
         }
@@ -76,12 +84,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         public Vector3 GetTileViewPosition(int row, int col)
         {
-            Vector2 cellSize = GetCellSize(_board);
             Vector3 worldPosition = BoardLayoutCalculator.CalculateWorldPosition(
                 row,
                 col,
                 GetBoardWorldOrigin(),
-                cellSize
+                _cellSize
             );
 
             return worldPosition;

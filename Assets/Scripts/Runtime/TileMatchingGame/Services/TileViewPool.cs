@@ -61,6 +61,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
                 _tileViewMap[tile] = tileView;
             }
             tileView.transform.position = _canvasAdapter.GetTileViewPosition(_board.Height + _board.Height, tile.Column);
+            tileView.transform.localScale = _canvasAdapter.GetTileViewScale(tileView);
             return tileView;
         }
 
@@ -93,7 +94,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             GameObject instance = UnityEngine.Object.Instantiate(_tilePrefab, _parent);
             instance.name = $"Tile-{i}";
             TileView tileView = instance.GetComponent<TileView>();
-            tileView.transform.localScale = _canvasAdapter.GetTileViewScale(tileView);
             return tileView;
         }
 
