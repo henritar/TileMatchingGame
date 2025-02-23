@@ -1,10 +1,10 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates;
+using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
-using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
@@ -16,6 +16,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         private IGameState _lastState;
         private IMatchFinder _matchFinder;
         private IBoardModifier _boardModifier;
+        private IScoreManager _scoreManager;
 
         private readonly Dictionary<GameStateEnum, IGameState> _gameStatesDict = new Dictionary<GameStateEnum, IGameState>();
 
@@ -24,12 +25,14 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         {
             _matchFinder = DIContainer.Instance.Resolve<IMatchFinder>();
             _boardModifier = DIContainer.Instance.Resolve<IBoardModifier>();
+            _scoreManager = DIContainer.Instance.Resolve<IScoreManager>();
         }
 
-        public GameManager(IMatchFinder matchFinder, IBoardModifier boardModifier)
+        public GameManager(IMatchFinder matchFinder, IBoardModifier boardModifier, IScoreManager scoreManager)
         {
             _matchFinder = matchFinder;
             _boardModifier = boardModifier;
+            _scoreManager = scoreManager;
         }
 
         private void CreateGameStates()
@@ -74,6 +77,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
         public void OnMatchedTiles(List<Tile> matchedTiles)
         {
+            _scoreManager.AddScore(matchedTiles.Count);
             _boardModifier.RemoveTiles(matchedTiles);
 
             _boardModifier.UpdateTilesPosition();
