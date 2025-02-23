@@ -24,11 +24,13 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         {
             Level level = CurrentLevel;
 
+            GameManager gameManager = DIContainer.Instance.Resolve<GameManager>();
+            gameManager.ResetGame();
+
             IBoard board = DIContainer.Instance.Resolve<IBoard>();
             board.Width = level.BoardWidth;
             board.Height = level.BoardHeight;
 
-            GameManager gameManager = DIContainer.Instance.Resolve<GameManager>();
             gameManager.StartGame();
             gameManager.SetGoals(level.LevelGoals);
         }

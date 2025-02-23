@@ -12,10 +12,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         private readonly BoardFiller _boardFiller;
         private readonly TileViewPool _poolViewPool;
 
-        public BoardModifier(IBoard board, BoardFiller boardFiller)
+        public BoardModifier(IBoard board, BoardFiller boardFiller, TileViewPool tileViewPool)
         {
             _board = board;
             _boardFiller = boardFiller;
+            _poolViewPool = tileViewPool;
         }
 
         public void RemoveTiles(List<Tile> tilesToRemove)
@@ -60,6 +61,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
         {
             RemoveTiles(_board.BoardTiles.ToList());
             _board.ResetBoard();
+            _poolViewPool.PrePopulate(20);
         }
     }
 }

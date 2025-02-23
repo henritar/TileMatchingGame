@@ -45,7 +45,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             LevelManager levelManager = new LevelManager(levelData.ToList());
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent, canvasAdapter);
             BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter);
-            BoardModifier boardModifier = new BoardModifier(DIContainer.Instance.Resolve<IBoard>(), boardFiller);
+            BoardModifier boardModifier = new BoardModifier(DIContainer.Instance.Resolve<IBoard>(), boardFiller, tileViewPool);
             GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier, DIContainer.Instance.Resolve<IScoreManager>());
             _gameplayController = new GameplayController(gameManager);
 
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             }
 
             tileViewPool.SetBoard();
-            tileViewPool.PrePopulate(10);
+            //tileViewPool.PrePopulate(10);
         }
 
         private void Update()

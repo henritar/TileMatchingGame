@@ -136,9 +136,14 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         public void StartGame()
         {
             CreateGameStates();
-            _scoreManager.ResetScore();
             _boardModifier.RestartBoard();
             ChangeState(GameStateEnum.Playing);
+        }
+
+        public void ResetGame()
+        {
+            _scoreManager.ResetScore();
+            _boardModifier.RestartBoard();
         }
 
         public void RefillBoard()
