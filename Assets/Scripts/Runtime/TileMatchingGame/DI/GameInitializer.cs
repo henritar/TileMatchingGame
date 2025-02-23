@@ -6,6 +6,7 @@ using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
 using Assets.Scripts.Runtime.TileMatchingGame.Services;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
+using Assets.Scripts.Runtime.TileMatchingGame.View;
 using System.Linq;
 using UnityEngine;
 
@@ -15,10 +16,14 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
     {
         [SerializeField] private TileFlyweight[] tileFlyweights; 
         [SerializeField] private Level[] levelData; 
+        [SerializeField] private GameHUD _gameHudView;
         [SerializeField] private GameObject _tilePrefab;
         [SerializeField] private Transform _tilesParent;
         [SerializeField] private RectTransform _boardFrameTransform;
         [SerializeField] private RectTransform _pauseView;
+        [SerializeField] private RectTransform _victoryView;
+        [SerializeField] private RectTransform _gameOverView;
+        [SerializeField] private RectTransform _goalsView;
 
         private GameplayController _gameplayController;
 
@@ -40,7 +45,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             _gameplayController = new GameplayController(gameManager);
 
             //GameStates
-            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState(_pauseView), new VictoryState(levelManager), new GameOverState()};
+            IGameState[] gameStates = new IGameState[] { new PlayingState(gameManager), new PauseState(_pauseView), new VictoryState(levelManager, _victoryView), new GameOverState(_gameOverView), new ShowGoalsState(_goalsView) };
             IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal()};
 
 
@@ -52,6 +57,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             DIContainer.Instance.Register<IBoardModifier, BoardModifier>(DIContainer.RegistrationType.Singleton, () => boardModifier);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameManager);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, _gameplayController);
+            DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, _gameHudView);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, gameStates);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, levelGoals);
         }

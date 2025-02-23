@@ -25,6 +25,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         private readonly Dictionary<GoalsEnum, IGoal> _levelGoalsDict = new Dictionary<GoalsEnum, IGoal>();
 
         public IMatchFinder MatchFinder { get => _matchFinder; }
+        public IReadOnlyList<IGoal> LevelGoals { get => _levelGoalsDict.Values.ToList().AsReadOnly(); }
         public GameManager()
         {
             _matchFinder = DIContainer.Instance.Resolve<IMatchFinder>();
@@ -55,7 +56,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
                 return;
             }
 
-            var newState = _gameStatesDict[newStateEnum];
+            var newState = newStateEnum == GameStateEnum.LastState ? _lastState : _gameStatesDict[newStateEnum];
 
             _lastState = _currentState;
             _currentState?.Exit();
@@ -124,13 +125,18 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
             _boardModifier.UpdateTilesPosition();
 
+            UpdateGoals();
+
+            RefillBoard();
+        }
+
+        private void UpdateGoals()
+        {
             bool allGoalsCompleted = _levelGoalsDict.Values.All(goal => goal.IsGoalCompleted());
             if (allGoalsCompleted)
             {
                 ChangeState(GameStateEnum.Victory);
             }
-
-            RefillBoard();
         }
 
         public void OnPausePressed()
@@ -153,6 +159,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         Paused,
         GameOver,
         Victory,
+        Goals,
+        LastState
     }
 
 }

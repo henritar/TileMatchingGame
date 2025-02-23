@@ -8,23 +8,21 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
     {
 
         private LevelManager _levelManager;
+        private RectTransform _victoryView;
 
         public GameStateEnum State => GameStateEnum.Victory;
 
-        public VictoryState()
-        {
-            _levelManager = DIContainer.Instance.Resolve<LevelManager>();
-        }
 
-        public VictoryState(LevelManager levelManager)
+        public VictoryState(LevelManager levelManager, RectTransform victoryView)
         {
             _levelManager = levelManager;
+            _victoryView = victoryView;
         }
 
 
         public void Enter()
         {
-            //Show Victory Interface
+            _victoryView.gameObject.SetActive(true);
             _levelManager.SetNextLevel();
         }
 

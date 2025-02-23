@@ -1,14 +1,23 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
+using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates
 {
     public class GameOverState : IGameState
     {
-        public GameStateEnum State => GameStateEnum.Victory;
+        private RectTransform _gameOverView;
+
+        public GameStateEnum State => GameStateEnum.GameOver;
+
+        public GameOverState(RectTransform gameOverView)
+        {
+            _gameOverView = gameOverView;
+        }
+
 
         public void Enter()
         {
-            //Show GameOver Interface
+            _gameOverView.gameObject.SetActive(true);
         }
 
         public void Exit()
