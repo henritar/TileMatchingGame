@@ -19,10 +19,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
 
         void Start()
         {
+            //Registering interfaces
             DIContainer.Instance.Register<IBoard, Board>(DIContainer.RegistrationType.Singleton, () => new Board(5, 5));
             DIContainer.Instance.Register<ITileFactory, TileFactory>(DIContainer.RegistrationType.Singleton, () => new TileFactory(tileFlyweights));
             DIContainer.Instance.Register<IMatchFinder, DFSMatchFinder>(DIContainer.RegistrationType.Singleton, () => new DFSMatchFinder());
 
+            //Instanciating
             CanvasAdapter canvasAdapter = new CanvasAdapter(DIContainer.Instance.Resolve<IBoard>(), Camera.main, _boardFrameTransform);
             TileViewPool tileViewPool = new TileViewPool(_tilePrefab, _tilesParent, canvasAdapter);
             BoardFiller boardFiller = new BoardFiller(DIContainer.Instance.Resolve<IBoard>(), DIContainer.Instance.Resolve<ITileFactory>(), tileViewPool, canvasAdapter);
@@ -30,6 +32,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.DI
             GameManager gameManager = new GameManager(DIContainer.Instance.Resolve<IMatchFinder>(), boardModifier);
             _gameplayController = new GameplayController(gameManager);
 
+
+            //Registering
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, canvasAdapter);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, tileViewPool);
             DIContainer.Instance.Register(DIContainer.RegistrationType.Singleton, boardFiller);

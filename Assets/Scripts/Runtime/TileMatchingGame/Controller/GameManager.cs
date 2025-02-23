@@ -56,7 +56,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
             _boardModifier.UpdateTilesPosition();
 
-            //RefillBoard();
+            RefillBoard();
         }
     }
 

@@ -56,7 +56,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         public void PositionTileView(TileView tileView)
         {
-            tileView.transform.localScale = GetTileViewScale(tileView);
             tileView.transform.position = GetTileViewPosition(tileView);
         }
 

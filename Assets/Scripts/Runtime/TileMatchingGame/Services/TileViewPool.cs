@@ -92,6 +92,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             GameObject instance = UnityEngine.Object.Instantiate(_tilePrefab, _parent);
             instance.name = $"Tile-{i}";
             TileView tileView = instance.GetComponent<TileView>();
+            tileView.transform.localScale = _canvasAdapter.GetTileViewScale(tileView);
             return tileView;
         }
 
