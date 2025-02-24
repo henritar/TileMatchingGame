@@ -19,7 +19,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             _currentLevelIndex = 0;
         }
 
-        // Carrega o nível atual
         public void LoadLevel()
         {
             Level level = CurrentLevel;

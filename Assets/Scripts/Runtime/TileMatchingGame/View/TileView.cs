@@ -55,7 +55,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
         {
             float duration = 0.3f;
             float elapsedTime = 0f;
-            Vector3 startPosition = transform.position; // Armazena a posição inicial
+            Vector3 startPosition = transform.position;
 
             while (elapsedTime < duration)
             {

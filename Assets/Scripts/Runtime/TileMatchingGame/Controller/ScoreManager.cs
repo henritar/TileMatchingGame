@@ -14,7 +14,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             private set
             {
                 _currentScore = value;
-                OnScoreChanged?.Invoke(_currentScore); // Dispara o evento quando a pontuação muda
+                OnScoreChanged?.Invoke(_currentScore); 
             }
         }
 

@@ -9,6 +9,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces
         public event Action<int> OnScoreChanged;
         void AddScore(int points);
         void ResetScore();
-        int CurrentScore { get; } // Propriedade
+        int CurrentScore { get; }
     }
 }
