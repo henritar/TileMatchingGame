@@ -28,12 +28,13 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
 
         public bool IsGoalCompleted()
         {
-            return _currentByColor.All(par => par.Value > _amountByColor[par.Key]);
+            return _currentByColor.All(par => par.Value >= _amountByColor[par.Key]);
         }
 
         public void SetupGoal(Level.GoalSetup[] setupData)
         {
             _currentByColor.Clear();
+            _amountByColor.Clear();
 
             foreach (var colorGoal in setupData.Where(data => data.goalEnum == GoalsEnum.ColorTilesGoal))
             {

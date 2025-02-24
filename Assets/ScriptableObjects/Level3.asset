@@ -18,7 +18,7 @@ MonoBehaviour:
   LevelGoals:
   - goalEnum: 2
     maxPoints: 0
-    tileColor: 0
+    tileColor: 1
     tileQuantity: 25
   - goalEnum: 2
     maxPoints: 0
