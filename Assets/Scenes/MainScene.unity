@@ -149,14 +149,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 548723737, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548723737, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 548723737, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -170,14 +162,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799772134, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 799772134, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 799772134, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
-      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 799772134, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
@@ -214,14 +198,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2123163671964282459, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123163671964282459, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123163671964282459, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
-      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2123163671964282459, guid: bade8373007455b48a6154ebaafaeb0e, type: 3}
@@ -434,7 +410,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -474,7 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -507,7 +481,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -549,7 +522,6 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 192, y: 192, z: 192}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -794,7 +766,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 512.83984, y: 907.629, z: -88.4253}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -833,10 +804,6 @@ PrefabInstance:
     - target: {fileID: 1943289931252323829, guid: 27d38bcb6ec383c4ca0036323c87f6ba, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1943289931252323829, guid: 27d38bcb6ec383c4ca0036323c87f6ba, type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1943289931252323831, guid: 27d38bcb6ec383c4ca0036323c87f6ba, type: 3}
       propertyPath: m_Pivot.x
@@ -1045,7 +1012,7 @@ PrefabInstance:
       objectReference: {fileID: 278419040}
     - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
       propertyPath: levelData.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9125003902615077219, guid: b36bc907bc86b2c48b402721376eb4d4, type: 3}
       propertyPath: levelData.Array.data[0]

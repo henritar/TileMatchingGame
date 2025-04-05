@@ -18,7 +18,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
 
         public string GetProgress()
         {
-            return string.Join("\n", _amountByColor.Select(par => $"{_currentByColor[par.Key]}/{par.Value} {par.Key}"));
+            return string.Join("\n", _amountByColor.Select(par => $"{_currentByColor[par.Key]}/{par.Value} {par.Key}\n"));
         }
 
         public bool HasFailedGoal()
