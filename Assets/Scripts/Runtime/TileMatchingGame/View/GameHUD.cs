@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller;
 using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
-using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -21,11 +20,11 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
         private IScoreManager _scoreManager;
         private LevelManager _levelManager;
 
-        void Start()
+        public void Initialize(GameManager gameManager, IScoreManager scoreManager, LevelManager levelManager)
         {
-            _gameManager = DIContainer.Instance.Resolve<GameManager>();
-            _scoreManager = DIContainer.Instance.Resolve<IScoreManager>();
-            _levelManager = DIContainer.Instance.Resolve<LevelManager>();
+            _gameManager = gameManager;
+            _scoreManager = scoreManager;
+            _levelManager = levelManager;
             _scoreManager.OnScoreChanged += SetGoalsText;
             _restartButton.onClick.AddListener(LoadLevelButton);
             _nextLevelButton.onClick.AddListener(LoadLevelButton);

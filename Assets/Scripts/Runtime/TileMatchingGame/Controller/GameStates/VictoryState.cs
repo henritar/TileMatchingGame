@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
-using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using UnityEngine;
 

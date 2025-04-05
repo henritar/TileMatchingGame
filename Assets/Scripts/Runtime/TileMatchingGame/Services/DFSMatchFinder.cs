@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
-using Assets.Scripts.Runtime.TileMatchingGame.Model;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Services
@@ -11,11 +9,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
     {
 
         private readonly IBoard _board;
-
-        public DFSMatchFinder()
-        {
-            _board = DIContainer.Instance.Resolve<IBoard>();
-        }
 
         public DFSMatchFinder(IBoard board)
         {

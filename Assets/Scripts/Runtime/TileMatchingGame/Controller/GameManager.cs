@@ -1,6 +1,5 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Controller.GameStates;
 using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
-using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
@@ -21,6 +20,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         private IBoardModifier _boardModifier;
         private IScoreManager _scoreManager;
         private ISoundManager _soundManager;
+        private IGameState[] _gameStates;
+        private IGoal[] _levelGoals;
         private List<IGoal> _completedGoals;
 
         private readonly Dictionary<GameStateEnum, IGameState> _gameStatesDict = new Dictionary<GameStateEnum, IGameState>();
@@ -29,28 +30,21 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         public IMatchFinder MatchFinder { get => _matchFinder; }
         public IReadOnlyList<IGoal> LevelGoals { get => _levelGoalsDict.Values.ToList().AsReadOnly(); }
         public event Action OnNextMove;
-        public GameManager()
-        {
-            _board = DIContainer.Instance.Resolve<IBoard>();
-            _matchFinder = DIContainer.Instance.Resolve<IMatchFinder>();
-            _boardModifier = DIContainer.Instance.Resolve<IBoardModifier>();
-            _scoreManager = DIContainer.Instance.Resolve<IScoreManager>();
-            _soundManager = DIContainer.Instance.Resolve<ISoundManager>();
-        }
 
-        public GameManager(IBoard board, IMatchFinder matchFinder, IBoardModifier boardModifier, IScoreManager scoreManager, ISoundManager soundManager)
+        public GameManager(IBoard board, IMatchFinder matchFinder, IBoardModifier boardModifier, IScoreManager scoreManager, ISoundManager soundManager, IGoal[] goals, Func<GameManager, IGameState[]> gameStateFactory)
         {
             _board = board;
             _matchFinder = matchFinder;
             _boardModifier = boardModifier;
             _scoreManager = scoreManager;
             _soundManager = soundManager;
+            _levelGoals = goals;
+            _gameStates = gameStateFactory(this);
         }
 
         private void CreateGameStates()
         {
-            var gameStates = DIContainer.Instance.Resolve<IGameState[]>();
-            foreach (var gameState in gameStates) 
+            foreach (var gameState in _gameStates) 
             {
                 _gameStatesDict[gameState.State] = gameState;
             }
@@ -75,12 +69,10 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
         {
             UnregisterGoals();
 
-            var levelGoals = DIContainer.Instance.Resolve<IGoal[]>();
-
             foreach (var goalSetup in goalsSetup)
             {
 
-                _levelGoalsDict[goalSetup.goalEnum] = levelGoals.First(g => g.Goal == goalSetup.goalEnum);
+                _levelGoalsDict[goalSetup.goalEnum] = _levelGoals.First(g => g.Goal == goalSetup.goalEnum);
                 _levelGoalsDict[goalSetup.goalEnum].SetupGoal(goalsSetup);
 
                 switch (goalSetup.goalEnum)

@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.View;
@@ -22,16 +22,16 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         private int _initialSize;
 
-        public TileViewPool(GameObject tilePrefab, Transform parent, CanvasAdapter canvasAdapter)
+        public TileViewPool(IBoard board, GameObject tilePrefab, Transform parent, CanvasAdapter canvasAdapter)
         {
+            _board = board;
             _tilePrefab = tilePrefab;
             _parent = parent;
             _canvasAdapter = canvasAdapter;
         }
         
-        public void SetBoard(IBoard board = null)
+        public void SetBoard(IBoard board)
         {
-            _board = board ?? DIContainer.Instance.Resolve<IBoard>();
             _board.OnTileRemoved += HandleTileRemoved;
             _board.OnTileFalling += HandleTileFalling;
         }

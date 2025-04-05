@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.DI;
-using Assets.Scripts.Runtime.TileMatchingGame.View;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.View;
 using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
@@ -7,11 +6,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
     public class GameplayController
     {
         private readonly GameManager _gameManager;
-
-        public GameplayController()
-        {
-            _gameManager = DIContainer.Instance.Resolve<GameManager>();
-        }
 
         public GameplayController(GameManager gameManager)
         {
@@ -57,7 +51,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
 
             if (hit.collider != null && hit.collider.gameObject.TryGetComponent(out TileView tileView))
             {
-                tileView.OnPointerClick();
+                HandleTileClick(tileView);
             }
         }
 

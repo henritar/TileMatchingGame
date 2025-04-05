@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller;
-using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -10,10 +9,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 {
     public class LevelButtonFactory
     {
+        private LevelManager _levelManager;
         public RectTransform _levelButtonParent;
         public Button _levelButtonPrefab;
-        public LevelButtonFactory(Button buttonPrefab, RectTransform levelButtonParent)
+        public LevelButtonFactory(LevelManager levelManager, Button buttonPrefab, RectTransform levelButtonParent)
         {
+            _levelManager = levelManager;
             _levelButtonPrefab = buttonPrefab;
             _levelButtonParent = levelButtonParent;
         }
@@ -29,9 +30,8 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         public void LevelButtonClickHandler(int levelIndex)
         {
-            var levelManager = DIContainer.Instance.Resolve<LevelManager>();
-            levelManager.SetLevel(levelIndex - 1);
-            levelManager.LoadLevel();
+            _levelManager.SetLevel(levelIndex - 1);
+            _levelManager.LoadLevel();
         }
     }
 }

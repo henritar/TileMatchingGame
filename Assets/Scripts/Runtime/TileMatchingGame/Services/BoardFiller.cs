@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
-using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
@@ -19,15 +18,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         private WaitForSeconds _waitFor2Secs = new WaitForSeconds(0.3f);
 
-        public BoardFiller()
-        {
-            _board = DIContainer.Instance.Resolve<IBoard>();
-            _tileFactory = DIContainer.Instance.Resolve<ITileFactory>();
-            _tileViewPool = DIContainer.Instance.Resolve<TileViewPool>();
-            _canvasAdapter = DIContainer.Instance.Resolve<CanvasAdapter>();
-            _soundManager = DIContainer.Instance.Resolve<ISoundManager>();
-        }
-
         public BoardFiller(IBoard board, ITileFactory tileFactory, TileViewPool tileViewPool, CanvasAdapter canvasAdapter, ISoundManager soundManager)
         {
             _board = board;
@@ -37,16 +27,12 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
             _soundManager = soundManager;
         }
 
-        public void StartFillEmptySpaces()
+        public void FillEmptySpaces()
         {
             CoroutineRunner.Instance.StartCoroutine(FillEmptySpacesCoroutine());
         }
-        public void FillEmptySpaces()
-        {
-            CoroutineRunner.Instance.StartCoroutine(FillEmptySpacesCoroutine(true));
-        }
 
-        public IEnumerator FillEmptySpacesCoroutine(bool shouldWait = false)
+        public IEnumerator FillEmptySpacesCoroutine()
         {
             for (int col = 0; col < _board.Width; col++)
             {
@@ -66,7 +52,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
                         _soundManager.PlaySound(AppConstants.TileFallingSound);
                     }
                 }
-                yield return shouldWait ? null : _waitFor2Secs;
+                yield return null;
             }
         }
     }

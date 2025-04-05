@@ -1,5 +1,4 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Controller;
-using Assets.Scripts.Runtime.TileMatchingGame.DI;
 using Assets.Scripts.Runtime.TileMatchingGame.Model;
 using System.Collections;
 using UnityEngine;
@@ -21,11 +20,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
             OriginalSpriteBoundsSize = SpriteRenderer.bounds.size;
         }
 
-        private void Start()
-        {
-            _gameplayController = DIContainer.Instance.Resolve<GameplayController>();
-        }
-
         public void Initialize(Tile tile)
         {
             _tile = tile;
@@ -39,11 +33,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
             {
                 SpriteRenderer.sprite = _tile.TileData.Sprite; 
             }
-        }
-
-        public void OnPointerClick()
-        {
-            _gameplayController.HandleTileClick(this);
         }
 
         public void OnTilePositionUpdated(Vector3 targetPosition)
