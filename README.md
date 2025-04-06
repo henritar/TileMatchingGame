@@ -6,7 +6,7 @@ Welcome to **Tile Matching Game**, a Unity-based puzzle game where players elimi
 
 ## **1. Core Systems**  
 
-This game follows an **MVC-based architecture**, separating logic into **Model, View, and Controller**, while utilizing **event-driven systems** and **dependency injection** for efficient communication between components.  
+This game follows an **MVC-based architecture**, separating logic into **Model, View, and Controller**, while utilizing **event-driven systems** for efficient communication between components.  
 
 ### **Game Board and Tile System**  
 
