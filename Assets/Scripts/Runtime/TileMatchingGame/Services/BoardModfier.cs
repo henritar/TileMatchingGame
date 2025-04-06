@@ -2,7 +2,6 @@
 using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 {
@@ -59,7 +58,20 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Services
 
         public void RestartBoard()
         {
-            RemoveTiles(_board.BoardTiles.ToList());
+            var tilesToRemove = new List<Tile>();
+            for (int row = 0; row < _board.Height; row++)
+            {
+                for (int col = 0; col < _board.Width; col++)
+                {
+                    var tile = _board.GetTileAt(row, col);
+                    if (tile != null)
+                    {
+                        tilesToRemove.Add(tile);
+                    }
+                }
+            }
+
+            RemoveTiles(tilesToRemove);
             _board.ResetBoard();
             _poolViewPool.PrePopulate(20);
         }

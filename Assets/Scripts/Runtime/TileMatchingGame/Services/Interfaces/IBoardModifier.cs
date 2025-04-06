@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Runtime.TileMatchingGame.Model;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Services.Interfaces
 {

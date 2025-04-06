@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
 {
@@ -8,8 +7,6 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public IReadOnlyList<Tile> BoardTiles { get; }
-
         public Tile GetTileAt(int row, int column);
         public void SetTileAt(int row, int column, Tile newTile);
         public void RemoveTileAt(int row, int column, bool isFalling = false);
