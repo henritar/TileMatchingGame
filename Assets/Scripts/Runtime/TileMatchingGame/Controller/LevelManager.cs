@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
+using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
@@ -8,15 +10,17 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
     public class LevelManager
     {
         private GameManager _gameManager;
+        private IGoalManager _goalManager;
         private IBoard _board;
         private List<Level> _levels;
         private int _currentLevelIndex;
 
         public Level CurrentLevel => _levels[_currentLevelIndex]; 
 
-        public LevelManager(GameManager gameManager, IBoard board, List<Level> levels)
+        public LevelManager(GameManager gameManager, IGoalManager goalManager, IBoard board, List<Level> levels)
         {
             _gameManager = gameManager;
+            _goalManager = goalManager;
             _board = board;
             _levels = levels;
             _currentLevelIndex = 0;
@@ -32,7 +36,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Controller
             _board.Height = level.BoardHeight;
 
             _gameManager.StartGame();
-            _gameManager.SetGoals(level.LevelGoals);
+            _goalManager.SetupLevelGoals(level.LevelGoals);
         }
 
         public void SetLevel(int index)

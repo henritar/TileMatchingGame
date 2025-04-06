@@ -1,19 +1,27 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
+﻿using Assets.Scripts.Runtime.TileMatchingGame.Controller.Interfaces;
+using Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces;
 using System.Linq;
 using static Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects.Level;
 
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model
 {
-    public class CollectTilesPointsGoal : IGoal
+    public class CollectTilesPointsGoal : IGoal<int>
     {
+        private readonly IScoreManager _scoreManager;
+
         private int _amountToCollect;
         private int _currentScore;
 
         public GoalsEnum Goal => GoalsEnum.TotalPointsGoal;
 
-        public CollectTilesPointsGoal()
+        public CollectTilesPointsGoal(IScoreManager scoreManager, GoalSetup setupData)
         {
+            _scoreManager = scoreManager;
+            _scoreManager.OnScoreChanged += UpdateProgress;
+            _currentScore = 0;
+
+            _amountToCollect = setupData.maxPoints;
             _currentScore = 0;
         }
 
@@ -32,7 +40,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             return $"{_currentScore}/{_amountToCollect}";
         }
 
-        public void UpdateProgress(object progressData)
+        public void UpdateProgress(int progressData)
         {
             if (progressData is int score)
             {
@@ -45,11 +53,9 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model
             return false;
         }
 
-        public void SetupGoal(GoalSetup[] setupData)
+        public void Dispose()
         {
-            var pointsGoal = setupData.First(data => data.goalEnum == GoalsEnum.TotalPointsGoal);
-            _amountToCollect = pointsGoal.maxPoints;
-            _currentScore = 0;
+            _scoreManager.OnScoreChanged -= UpdateProgress;
         }
     }
 }

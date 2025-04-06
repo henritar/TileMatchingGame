@@ -18,12 +18,14 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
 
         private GameManager _gameManager;
         private IScoreManager _scoreManager;
+        private IGoalManager _goalManager;
         private LevelManager _levelManager;
 
-        public void Initialize(GameManager gameManager, IScoreManager scoreManager, LevelManager levelManager)
+        public void Initialize(GameManager gameManager, IScoreManager scoreManager, IGoalManager goalManager, LevelManager levelManager)
         {
             _gameManager = gameManager;
             _scoreManager = scoreManager;
+            _goalManager = goalManager;
             _levelManager = levelManager;
             _scoreManager.OnScoreChanged += SetGoalsText;
             _restartButton.onClick.AddListener(LoadLevelButton);
@@ -42,7 +44,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.View
         public void SetGoalsDescription()
         {
             _goalsText.text = string.Join("\n\n",
-                _gameManager.LevelGoals.Select(goal =>
+                _goalManager.CurrentLevelGoals.Select(goal =>
                     $"{goal.GetDescription()}\n{goal.GetProgress()}"));
 
         }

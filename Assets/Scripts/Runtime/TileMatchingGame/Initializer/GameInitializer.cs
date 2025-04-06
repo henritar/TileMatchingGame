@@ -34,6 +34,7 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Initializer
         [SerializeField] private AudioSource _sfxSource;
 
         private IBoard _board;
+        private IGoalManager _goalManager;
         private GameplayController _gameplayController;
         private TileViewPool _tileViewPool;
         private LevelManager _levelManager;
@@ -47,30 +48,27 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Initializer
             IMatchFinder matchFinder = new DFSMatchFinder(_board);
             IScoreManager scoreManager = new ScoreManager();
             ISoundManager soundManager = new SoundManager(_musicSource, _sfxSource);
-            IGoal[] levelGoals = new IGoal[] { new CollectTilesPointsGoal(), new MaxMovesGoal(), new CollectColorTilesGoal() };
-
-            
 
             //Instanciating
             CanvasAdapter canvasAdapter = new CanvasAdapter(_board, Camera.main, _boardFrameTransform);
             _tileViewPool = new TileViewPool(_board, _tilePrefab, _tilesParent, canvasAdapter);
             BoardFiller boardFiller = new BoardFiller(_board, tileFactory, _tileViewPool, canvasAdapter, soundManager);
             BoardModifier boardModifier = new BoardModifier(_board, boardFiller, _tileViewPool);
-            GameManager gameManager = new GameManager(_board, matchFinder, boardModifier, scoreManager, soundManager, levelGoals,
-                InitializeGameStates(soundManager)
+            GameManager gameManager = new GameManager(_board, matchFinder, boardModifier, scoreManager, soundManager,
+                InitializeGameStates(soundManager, scoreManager)
                 );
 
-            
             _levelFactory = new LevelButtonFactory(_levelManager, _levelButtonPrefab, _levelButtonParent);
             _gameplayController = new GameplayController(gameManager);
-            _gameHudView.Initialize(gameManager, scoreManager, _levelManager);
+            _gameHudView.Initialize(gameManager, scoreManager, _goalManager, _levelManager);
         }
 
-        private Func<GameManager, IGameState[]> InitializeGameStates(ISoundManager soundManager)
+        private Func<GameManager, IGameState[]> InitializeGameStates(ISoundManager soundManager, IScoreManager scoreManager)
         {
             return gm =>
             {
-                _levelManager = new LevelManager(gm, _board, levelData.ToList());
+                _goalManager = new GoalManager(gm, scoreManager, _board);
+                _levelManager = new LevelManager(gm, _goalManager, _board, levelData.ToList());
                 return new IGameState[]
                                 { new PlayingState(gm, _startScreenView,soundManager), new PauseState(_pauseView),
                     new VictoryState(_levelManager, _victoryView,soundManager), new GameOverState(_gameOverView,

@@ -1,24 +1,34 @@
-﻿using Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects;
-using System.Collections.Generic;
-using System.Linq;
+﻿using static Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects.Level;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
 {
-    public class CollectColorTilesGoal : IGoal
+    public class CollectColorTilesGoal : IGoal<Tile>
     {
-        private readonly Dictionary<TileColor, int> _amountByColor = new Dictionary<TileColor, int>();
-        private readonly Dictionary<TileColor, int> _currentByColor = new Dictionary<TileColor, int>();
+        private readonly IBoard _board;
+        private readonly TileColor _tileColor;
+        private readonly int _amountToReach;
+        private int _currentAmount;
         public GoalsEnum Goal => GoalsEnum.ColorTilesGoal;
+
+        public CollectColorTilesGoal(IBoard board, GoalSetup setupData) 
+        {
+            _board = board;
+            _board.OnTileRemoved += UpdateProgress;
+
+            _tileColor = setupData.tileColor;
+            _amountToReach = setupData.tileQuantity;
+            _currentAmount = 0;
+        }
 
         public string GetDescription()
         {
-            
-            return $"You must get:\n {string.Join("\n", _amountByColor.Select(par => $"{par.Key} {par.Value} tiles"))}";
+
+            return $"You must get:\n {_tileColor}: {_amountToReach} tiles";
         }
 
         public string GetProgress()
         {
-            return string.Join("\n", _amountByColor.Select(par => $"{_currentByColor[par.Key]}/{par.Value} {par.Key}\n"));
+            return $"{_currentAmount}/{_amountToReach}\n";
         }
 
         public bool HasFailedGoal()
@@ -28,28 +38,20 @@ namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
 
         public bool IsGoalCompleted()
         {
-            return _currentByColor.All(par => par.Value >= _amountByColor[par.Key]);
+            return _currentAmount >= _amountToReach;
         }
 
-        public void SetupGoal(Level.GoalSetup[] setupData)
+        public void UpdateProgress(Tile progressData)
         {
-            _currentByColor.Clear();
-            _amountByColor.Clear();
-
-            foreach (var colorGoal in setupData.Where(data => data.goalEnum == GoalsEnum.ColorTilesGoal))
+            if (_tileColor == progressData.TileData.Color)
             {
-                _amountByColor[colorGoal.tileColor] = colorGoal.tileQuantity;
-                _currentByColor[colorGoal.tileColor] = 0;
-            };
-        }
-
-        public void UpdateProgress(object progressData)
-        {
-            if (progressData is Tile tile && _currentByColor.Keys.Contains(tile.TileData.Color))
-            {
-                _currentByColor[tile.TileData.Color]++;
+                _currentAmount++;
             }
         }
 
+        public void Dispose()
+        {
+            _board.OnTileRemoved -= UpdateProgress;
+        }
     }
 }

@@ -1,16 +1,19 @@
-﻿using static Assets.Scripts.Runtime.TileMatchingGame.ScriptableObjects.Level;
+﻿using System;
 
 namespace Assets.Scripts.Runtime.TileMatchingGame.Model.Interfaces
 {
-    public interface IGoal
+    public interface IGoal : IDisposable
     {
         public GoalsEnum Goal { get; }
         public bool IsGoalCompleted();
         public bool HasFailedGoal();
         public string GetDescription();
-        public void UpdateProgress(object progressData);
         public string GetProgress();
-        public void SetupGoal(GoalSetup[] setupData);
+    }
+
+    public interface IGoal<T> : IGoal
+    {
+        public void UpdateProgress(T progressData);
     }
 
     public enum GoalsEnum
